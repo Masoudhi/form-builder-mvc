@@ -1,6 +1,8 @@
 @model LoginViewModel
+@inject Microsoft.Extensions.Configuration.IConfiguration Config
 @{
     ViewData["Title"] = "Sign in";
+    var demoNotice = Config["Demo:Notice"];   // set on the public demo, e.g. "Demo data is reset every night (03:00 UTC)."
 }
 
 <div class="login-wrap">
@@ -38,6 +40,10 @@
                     <tr><td><code>user</code> / <code>User@@12345</code></td><td>Level 10 · fills in forms</td></tr>
                 </tbody>
             </table>
+            @if (!string.IsNullOrWhiteSpace(demoNotice))
+            {
+                <p class="text-muted small mt-2 mb-0">@demoNotice</p>
+            }
         </div>
     </div>
 </div>

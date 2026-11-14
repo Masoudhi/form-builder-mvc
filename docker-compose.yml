@@ -1,11 +1,10 @@
-# Runs everything: MySQL 5.7 + form-builder-api + form-builder-mvc.
+# Runs everything: MySQL 8.0 + form-builder-api + form-builder-mvc.
 # Clone form-builder-api next to this folder first:
-#   git clone https://github.com/GITHUB_USER/form-builder-api.git ../form-builder-api
+#   git clone https://github.com/Masoudhi/form-builder-api.git ../form-builder-api
 #   docker compose up --build        -> http://localhost:8080
 services:
   mysql:
-    image: mysql:5.7
-    platform: linux/amd64
+    image: mysql:8.0
     environment:
       MYSQL_DATABASE: formbuilder
       MYSQL_USER: formbuilder
@@ -25,9 +24,7 @@ services:
     restart: on-failure
     build: ../form-builder-api
     environment:
-      # SslMode=None only inside this private Docker network: MySQL 5.7's auto-generated certificate is
-      # rejected by OpenSSL on Linux. In production use a proper certificate and SslMode=Required.
-      ConnectionStrings__FormBuilder: "Server=mysql;Port=3306;Database=formbuilder;User ID=formbuilder;Password=formbuilder_dev;SslMode=None;"
+      ConnectionStrings__FormBuilder: "Server=mysql;Port=3306;Database=formbuilder;User ID=formbuilder;Password=formbuilder_dev;"
       Jwt__SigningKey: "compose-only-signing-key-change-me-0123456789"
     depends_on:
       mysql:

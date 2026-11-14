@@ -1,4 +1,4 @@
-// End-to-end browser test: MVC site + form-builder-api + MySQL 5.7, driven through Microsoft Edge.
+// End-to-end browser test: MVC site + form-builder-api + MySQL 8.0, driven through Microsoft Edge.
 //   Start MySQL, the API (http://localhost:5080) and the MVC site (http://localhost:5090), then:
 //   npm install && npm test
 // Environment: MVC_URL, API_URL, BROWSER_CHANNEL (msedge | chrome), SCREENSHOTS (folder to save pages to)

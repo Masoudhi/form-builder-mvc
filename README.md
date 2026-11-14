@@ -1,6 +1,6 @@
 # Form Builder – ASP.NET Core MVC
 
-[![CI](https://github.com/GITHUB_USER/form-builder-mvc/actions/workflows/ci.yml/badge.svg)](https://github.com/GITHUB_USER/form-builder-mvc/actions/workflows/ci.yml)
+[![CI](https://github.com/Masoudhi/form-builder-mvc/actions/workflows/ci.yml/badge.svg)](https://github.com/Masoudhi/form-builder-mvc/actions/workflows/ci.yml)
 ![ASP.NET Core MVC](https://img.shields.io/badge/ASP.NET%20Core%20MVC-9.0-512BD4?logo=dotnet&logoColor=white)
 ![jQuery](https://img.shields.io/badge/jQuery-3.7%20%2B%20UI%201.14-0769AD?logo=jquery&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?logo=bootstrap&logoColor=white)
@@ -12,7 +12,7 @@ Sign in, design a form by dragging fields onto a canvas, publish it, let users f
 answers.
 
 This app has **no database access at all**. Every piece of data comes from
-**[form-builder-api](https://github.com/GITHUB_USER/form-builder-api)** (.NET 9 + MySQL 5.7), called server-side with
+**[form-builder-api](https://github.com/Masoudhi/form-builder-api)** (.NET 9 + MySQL 8.0), called server-side with
 the signed-in user's JWT.
 
 ![Form builder](docs/screenshots/builder.png)
@@ -59,7 +59,7 @@ flowchart LR
     P --> H
     C -->|login| H
     H -->|"HTTP + Bearer JWT"| API["form-builder-api"]
-    API --> DB[("MySQL 5.7")]
+    API --> DB[("MySQL 8.0")]
 ```
 
 1. **Sign-in:** `AccountController` posts the credentials to `POST /api/auth/login`. On success it signs the user in
@@ -105,7 +105,7 @@ sequenceDiagram
 
 ## Getting started
 
-**Prerequisites:** .NET 9 SDK, Docker, and [form-builder-api](https://github.com/GITHUB_USER/form-builder-api) cloned
+**Prerequisites:** .NET 9 SDK, Docker, and [form-builder-api](https://github.com/Masoudhi/form-builder-api) cloned
 next to this folder.
 
 ```bash
@@ -114,7 +114,7 @@ docker compose up -d mysql
 dotnet run --project src/FormBuilder.Api --launch-profile http        # http://localhost:5080
 
 # 2. this app
-git clone https://github.com/GITHUB_USER/form-builder-mvc.git
+git clone https://github.com/Masoudhi/form-builder-mvc.git
 cd form-builder-mvc
 dotnet run --project src/FormBuilder.Mvc --launch-profile http        # http://localhost:5090
 ```
@@ -130,7 +130,7 @@ Sign in at **http://localhost:5090** with a demo account:
 
 ```bash
 cd form-builder-mvc
-docker compose up --build        # MySQL 5.7 + API + MVC on http://localhost:8080
+docker compose up --build        # MySQL 8.0 + API + MVC on http://localhost:8080
 ```
 
 The API address is set with `Api:BaseUrl` (default `http://localhost:5080/`).
