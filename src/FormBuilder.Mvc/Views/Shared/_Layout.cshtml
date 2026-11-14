@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Design forms with drag and drop, publish them and collect validated submissions." />
+    @* Anti-forgery token for jQuery AJAX calls (sent as the RequestVerificationToken header) *@
+    <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
+    <title>@ViewData["Title"] · Form Builder</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+@{
+    var signedIn = User.Identity?.IsAuthenticated == true;
+    var creator = signedIn && User.CanCreateForms();
+}
+<body data-can-create="@(creator ? "true" : "false")">
+    @if (signedIn)
+    {
+        <header class="topbar">
+            <a class="brand" asp-controller="Forms" asp-action="Index">
+                <span class="logo" aria-hidden="true">▤</span> Form Builder
+            </a>
+            <nav class="nav-links">
+                <a asp-controller="Forms" asp-action="Index">My forms</a>
+                @if (creator)
+                {
+                    <a class="btn btn-primary btn-sm" asp-controller="Forms" asp-action="Builder">+ New form</a>
+                }
+                <div class="dropdown">
+                    <button class="user-chip dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar" aria-hidden="true">@User.DisplayName().FirstOrDefault()</span>
+                        <span class="d-none d-sm-inline">@User.DisplayName()</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="dropdown-item-text small text-muted">
+                            Signed in as <strong>@User.Identity!.Name</strong><br />
+                            Level @User.Level() · @(creator ? "Form creator" : "Can fill in forms")
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                <button type="submit" class="dropdown-item">Sign out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    }
+
+    <main class="page">
+        @RenderBody()
+    </main>
+
+    <div class="toasts" aria-live="polite"></div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

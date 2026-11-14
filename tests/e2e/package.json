@@ -1,0 +1,11 @@
+{
+  "name": "form-builder-e2e",
+  "private": true,
+  "description": "Browser end-to-end test: drives Microsoft Edge (or Chrome) through the real MVC site, API and MySQL.",
+  "scripts": {
+    "test": "node builder.e2e.js"
+  },
+  "dependencies": {
+    "playwright-core": "1.65.1"
+  }
+}

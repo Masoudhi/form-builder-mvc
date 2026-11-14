@@ -1,0 +1,61 @@
+@model int?
+@{
+    ViewData["Title"] = Model is null ? "New form" : "Edit form";
+}
+
+<div id="builder" data-form-id="@Model">
+    <div class="toolbar card">
+        <div class="titles">
+            <label class="visually-hidden" for="form-name">Form name</label>
+            <input id="form-name" class="name-input" placeholder="Form name" maxlength="100" disabled />
+            <label class="visually-hidden" for="form-description">Description</label>
+            <input id="form-description" class="description-input" placeholder="Short description (optional)" maxlength="500" disabled />
+        </div>
+        <div class="toolbar-actions">
+            <span id="draft-status" class="draft-status" title="Changes are kept in memory on the server until you save">Loading…</span>
+            <div class="form-check form-switch m-0">
+                <input class="form-check-input" type="checkbox" role="switch" id="form-published" disabled />
+                <label class="form-check-label fw-semibold" for="form-published">Published</label>
+            </div>
+            <button type="button" id="btn-preview" class="btn btn-outline-secondary" disabled>Preview</button>
+            <button type="button" id="btn-cancel" class="btn btn-outline-secondary">Cancel</button>
+            <button type="button" id="btn-save" class="btn btn-primary" disabled>Save</button>
+        </div>
+    </div>
+
+    <div id="problems" class="alert alert-warning d-none" role="status"></div>
+
+    <div class="workspace">
+        <aside class="card palette">
+            <h2>Fields</h2>
+            <p class="text-muted small">Drag onto the form or click to add.</p>
+            <ul id="palette" class="palette-list">
+                <li class="palette-item" data-type="Text"><span class="icon">Aa</span>Short text</li>
+                <li class="palette-item" data-type="TextArea"><span class="icon">¶</span>Long text</li>
+                <li class="palette-item" data-type="Email"><span class="icon">@@</span>Email</li>
+                <li class="palette-item" data-type="Number"><span class="icon">#</span>Number</li>
+                <li class="palette-item" data-type="Date"><span class="icon">31</span>Date</li>
+                <li class="palette-item" data-type="Select"><span class="icon">▾</span>Dropdown</li>
+                <li class="palette-item" data-type="Radio"><span class="icon">◉</span>Single choice</li>
+                <li class="palette-item" data-type="Checkbox"><span class="icon">✓</span>Checkbox</li>
+            </ul>
+        </aside>
+
+        <section class="card canvas">
+            <ul id="canvas" class="canvas-list" aria-label="Form fields"></ul>
+        </section>
+
+        <aside class="card properties" id="properties">
+            <h2>Field settings</h2>
+            <p class="text-muted">Select a field on the form to edit it.</p>
+        </aside>
+    </div>
+
+    <section id="preview" class="card preview d-none" aria-label="Preview"></section>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/js/renderer.js" asp-append-version="true"></script>
+    <script src="~/js/builder.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,23 @@
+@model int
+@{
+    ViewData["Title"] = "Submissions";
+}
+
+<div id="submissions" data-form-id="@Model">
+    <div class="page-head">
+        <div>
+            <h1 id="sub-title">Submissions</h1>
+            <p id="sub-count">Loading…</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-outline-secondary" asp-action="Builder" asp-route-id="@Model">Edit form</a>
+            <a class="btn btn-outline-secondary" asp-action="Fill" asp-route-id="@Model">Fill in</a>
+            <a class="btn btn-primary disabled" id="btn-export" href="~/ajax/forms/@Model/export" aria-disabled="true">Export CSV</a>
+        </div>
+    </div>
+    <div id="sub-body"></div>
+</div>
+
+@section Scripts {
+    <script src="~/js/submissions.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,13 @@
+@model int
+@{
+    ViewData["Title"] = "Fill in form";
+}
+
+<div class="fill-wrap" id="fill" data-form-id="@Model">
+    <p class="text-muted" id="fill-loading">Loading form…</p>
+</div>
+
+@section Scripts {
+    <script src="~/js/renderer.js" asp-append-version="true"></script>
+    <script src="~/js/fill.js" asp-append-version="true"></script>
+}

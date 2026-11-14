@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "My forms";
+    var creator = User.CanCreateForms();
+}
+
+<div class="page-head">
+    <div>
+        <h1>@(creator ? "My forms" : "Forms to fill in")</h1>
+        <p>@(creator ? "Design a form, publish it, and collect validated answers." : "Choose a form to fill in.")</p>
+    </div>
+    @if (creator)
+    {
+        <a class="btn btn-primary" asp-action="Builder">+ New form</a>
+    }
+</div>
+
+<div id="forms" class="form-grid" aria-busy="true">
+    <div class="card skeleton"></div><div class="card skeleton"></div><div class="card skeleton"></div>
+</div>
+
+@section Scripts {
+    <script src="~/js/forms-list.js" asp-append-version="true"></script>
+}

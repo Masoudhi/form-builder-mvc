@@ -1,0 +1,43 @@
+# Runs everything: MySQL 5.7 + form-builder-api + form-builder-mvc.
+# Clone form-builder-api next to this folder first:
+#   git clone https://github.com/GITHUB_USER/form-builder-api.git ../form-builder-api
+#   docker compose up --build        -> http://localhost:8080
+services:
+  mysql:
+    image: mysql:5.7
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: formbuilder
+      MYSQL_USER: formbuilder
+      MYSQL_PASSWORD: formbuilder_dev
+      MYSQL_ROOT_PASSWORD: root_dev
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../form-builder-api/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uformbuilder", "-pformbuilder_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  api:
+    build: ../form-builder-api
+    environment:
+      ConnectionStrings__FormBuilder: "Server=mysql;Port=3306;Database=formbuilder;User ID=formbuilder;Password=formbuilder_dev;"
+      Jwt__SigningKey: "compose-only-signing-key-change-me-0123456789"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mvc:
+    build: .
+    environment:
+      Api__BaseUrl: "http://api:8080/"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+
+volumes:
+  mysql-data:
